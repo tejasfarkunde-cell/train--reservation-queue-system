@@ -1,0 +1,101 @@
+<head>
+    <title>Train Reservation Queue</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: black;
+        }
+
+        .box {
+            width: 450px;
+            margin: 50px auto;
+            padding: 25px;
+            background: white;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        input, button {
+            width: 90%;
+            padding: 10px;
+            margin: 7px;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .person {
+            background: #e5f0ff;
+            padding: 10px;
+            margin: 7px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1> Train Reservation</h1>
+
+    <input id="name" placeholder="Passenger Name">
+    <input id="train" placeholder="Train Number">
+    <input id="dest" placeholder="Destination">
+
+    <button onclick="add()">Join Queue</button>
+    <button onclick="remove()">Serve Passenger</button>
+
+    <h2>Reservation Queue</h2>
+    <div id="queue"></div>
+
+    <p><b>FIFO:</b> First In First Out</p>
+</div>
+
+
+<script>
+    let queue = [];
+
+    function add() {
+        let name = document.getElementById("name").value;
+        let train = document.getElementById("train").value;
+        let dest = document.getElementById("dest").value;
+
+        if (name == "" || train == "" || dest == "") {
+            alert("Fill all details");
+            return;
+        }
+
+        queue.push(name + " | Train: " + train + " | " + dest);
+
+        document.getElementById("name").value = "";
+        document.getElementById("train").value = "";
+        document.getElementById("dest").value = "";
+
+        show();
+    }
+
+    function remove() {
+        if (queue.length == 0) {
+            alert("Queue is empty");
+            return;
+        }
+
+        alert(queue.shift() + " is served");
+        show();
+    }
+
+    function show() {
+        document.getElementById("queue").innerHTML =
+            queue.map((x, i) =>
+            `<div class="person">${i + 1}. ${x}</div>`
+            ).join("");
+    }
+</script>
+
+</body>
+</html>
